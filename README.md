@@ -94,6 +94,23 @@ namespace LearnSolidPrinciple.Rating
 Of particular interest is the line: **Type.GetType($"LearnSolidPrinciple.Rating.{policy.Type}PolicyRater")**, it
 is comprised of the namespace and the name of the class (pattern matached from Policy.Type)
 
+As the return could be a null, we do hower need to do a check on it on return to RatingEngine class
+
+```
+var policyRaterAbstract = factory.Create(policy, this);
+policyRaterAbstract?.Rate(policy);
+```
+
+### Closed for modification
+
+One way to not allow modification is through guard clauses.  As shown in the 
+package http://github.com/ardalis/guardclauses.  You can extend using your own
+guard clauses.
+
+
+
+
+
 
 
 
