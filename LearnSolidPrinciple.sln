@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{22B0AC6A-2C48-4D17-AEAA-3481DA5FAB65}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F0443DFF-0FC3-479D-BE9E-492B38E2F412}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C6ACEA75-13C0-443A-B5D1-2386CEB60688}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnSolidPrinciple.Rating", "LearnSolidPrinciple.Rating\LearnSolidPrinciple.Rating.csproj", "{2B66AE60-5F44-4ED8-8090-2A28A3710A27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnSolidPrinciple.Rating.Test", "LearnSolidPrinciple.Rating.Test\LearnSolidPrinciple.Rating.Test.csproj", "{360898FF-0371-4882-86D5-4C56BA12363B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B66AE60-5F44-4ED8-8090-2A28A3710A27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B66AE60-5F44-4ED8-8090-2A28A3710A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B66AE60-5F44-4ED8-8090-2A28A3710A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B66AE60-5F44-4ED8-8090-2A28A3710A27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{360898FF-0371-4882-86D5-4C56BA12363B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{360898FF-0371-4882-86D5-4C56BA12363B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{360898FF-0371-4882-86D5-4C56BA12363B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{360898FF-0371-4882-86D5-4C56BA12363B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2B66AE60-5F44-4ED8-8090-2A28A3710A27} = {F0443DFF-0FC3-479D-BE9E-492B38E2F412}
+		{360898FF-0371-4882-86D5-4C56BA12363B} = {C6ACEA75-13C0-443A-B5D1-2386CEB60688}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DAD7AB49-B613-462C-870D-489550129223}
+	EndGlobalSection
+EndGlobal
