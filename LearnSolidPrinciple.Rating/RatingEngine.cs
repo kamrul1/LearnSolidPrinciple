@@ -32,7 +32,7 @@ namespace LearnSolidPrinciple.Rating
             var factory = new PolicyRaterFactory();
 
             var policyRaterAbstract = factory.Create(policy, this);
-            policyRaterAbstract.Rate(policy);
+            policyRaterAbstract?.Rate(policy);
 
             Logger.Log("Rating completed.");
 
