@@ -1,37 +1,42 @@
 ﻿using System;
-using System.IO;
-using System.Text.Json;
 
 namespace LearnSolidPrinciple.Rating
 {
+
+
     /// <summary>
     /// The RatingEngine reads the policy application details from a file and 
     /// produces a numeric rating value based on the details
     /// </summary>
-    public class RatingEngine
+    public class RatingEngine 
     {
         public decimal Rating { get; set; }
 
+        //
+        public ConsoleLogger Logger { get; set; } = new ConsoleLogger();
+        public FilePolicySource PolicySource { get; set; } = new FilePolicySource();
+
+        public JsonPolicySerializer PolicySerializer { get; set; } = new JsonPolicySerializer();
+
         public void Rate()
         {
-            Console.WriteLine("Starting rate.");
 
-            Console.WriteLine("Loading policy.");
+            Logger.Log("Starting rate.");
+
+            Logger.Log("Loading policy.");
 
             //load policy - open file policy.json
-            string policyJson = File.ReadAllText("policy.json");
-
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            var policy = JsonSerializer.Deserialize<Policy>(policyJson, options);
+            string policyJson = PolicySource.GetPolicyFromSource();
+            Policy policy = PolicySerializer.GetPolicyFromJsonString(policyJson);
 
             switch (policy.Type)
             {
                 case PolicyType.Auto:
-                    Console.WriteLine("Rating AUTO policy...");
-                    Console.WriteLine("Validating policy.");
+                    Logger.Log("Rating AUTO policy...");
+                    Logger.Log("Validating policy.");
                     if (String.IsNullOrEmpty(policy.Make))
                     {
-                        Console.WriteLine("Auto policy must specify Make");
+                        Logger.Log("Auto policy must specify Make");
                         return;
                     }
 
@@ -45,17 +50,17 @@ namespace LearnSolidPrinciple.Rating
                     }
                     break;
                 case PolicyType.Land:
-                    Console.WriteLine("Rating LAND policy...");
-                    Console.WriteLine("Validating policy.");
+                    Logger.Log("Rating LAND policy...");
+                    Logger.Log("Validating policy.");
                     if (policy.BondAmount == 0 || policy.Valuation == 0)
                     {
-                        Console.WriteLine("Land policy must specify Bond Amount and Valuation.");
+                        Logger.Log("Land policy must specify Bond Amount and Valuation.");
                         return;
                     }
 
                     if (policy.BondAmount < 0.8m * policy.Valuation)
                     {
-                        Console.WriteLine("Insufficient bond amount");
+                        Logger.Log("Insufficient bond amount");
                         return;
                     }
 
@@ -63,23 +68,23 @@ namespace LearnSolidPrinciple.Rating
                     break;
 
                 case PolicyType.Life:
-                    Console.WriteLine("Rating LIFE policy...");
-                    Console.WriteLine("Validating policy.");
+                    Logger.Log("Rating LIFE policy...");
+                    Logger.Log("Validating policy.");
                     if (policy.DateOfBirth == DateTime.MinValue)
                     {
-                        Console.WriteLine("Life policy must include Date of Birth.");
+                        Logger.Log("Life policy must include Date of Birth.");
                         return;
                     }
 
                     if (policy.DateOfBirth < DateTime.Today.AddYears(-100))
                     {
-                        Console.WriteLine("Centenarians are not eligible for coverage");
+                        Logger.Log("Centenarians are not eligible for coverage");
                         return;
                     }
 
                     if (policy.Amount == 0)
                     {
-                        Console.WriteLine("Life policy must include an Amount");
+                        Logger.Log("Life policy must include an Amount");
                         return;
                     }
 
@@ -100,15 +105,12 @@ namespace LearnSolidPrinciple.Rating
                     break;
 
                 default:
-                    Console.WriteLine("Unknown policy type");
+                    Logger.Log("Unknown policy type");
                     break;
 
 
             }
 
         }
-
-
-
     }
 }
