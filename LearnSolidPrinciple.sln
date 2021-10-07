@@ -12,9 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F0443DFF-0FC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C6ACEA75-13C0-443A-B5D1-2386CEB60688}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnSolidPrinciple.Rating", "LearnSolidPrinciple.Rating\LearnSolidPrinciple.Rating.csproj", "{2B66AE60-5F44-4ED8-8090-2A28A3710A27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearnSolidPrinciple.Rating", "LearnSolidPrinciple.Rating\LearnSolidPrinciple.Rating.csproj", "{2B66AE60-5F44-4ED8-8090-2A28A3710A27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnSolidPrinciple.Rating.Test", "LearnSolidPrinciple.Rating.Test\LearnSolidPrinciple.Rating.Test.csproj", "{360898FF-0371-4882-86D5-4C56BA12363B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearnSolidPrinciple.Rating.Test", "LearnSolidPrinciple.Rating.Test\LearnSolidPrinciple.Rating.Test.csproj", "{360898FF-0371-4882-86D5-4C56BA12363B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
