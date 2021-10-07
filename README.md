@@ -40,6 +40,60 @@ them i.e. PolicyRaterAbstract class.
 Now that classes all share their initialisation, it's good at this point to 
 use a **PolicyRaterFactory class**.
 
+```
+public class PolicyRaterFactory
+{
+    public PolicyRaterAbstract Create(Policy policy, RatingEngine engine)
+    {
+        switch (policy.Type)
+        {
+            case PolicyType.Auto:
+                return new AutoPolicyRater(engine, engine.Logger);
+
+            case PolicyType.Flood:
+                return new FloodPolicyRater(engine, engine.Logger);
+
+            case PolicyType.Land:
+                return new LandPolicyRater(engine, engine.Logger);
+
+            case PolicyType.Life:
+                return new LifePolicyRater(engine, engine.Logger);
+
+            default:
+                // currently this can't be reached 
+                return new UnknownPolicyRater(engine, engine.Logger);
+        }
+    }
+}
+```
+
+Using string pattern matching, reflection can used used to refactor this class
+further.
+
+```
+namespace LearnSolidPrinciple.Rating
+{
+    public class PolicyRaterFactory
+    {
+        public PolicyRaterAbstract Create(Policy policy, RatingEngine engine)
+        {
+            try
+            {
+                return (PolicyRaterAbstract)Activator.CreateInstance(
+                    Type.GetType($"LearnSolidPrinciple.Rating.{policy.Type}PolicyRater"),
+                        new object[] { engine, engine.Logger });
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
+}
+```
+Of particular interest is the line: **Type.GetType($"LearnSolidPrinciple.Rating.{policy.Type}PolicyRater")**, it
+is comprised of the namespace and the name of the class (pattern matached from Policy.Type)
+
 
 
 

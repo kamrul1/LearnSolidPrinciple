@@ -10,23 +10,15 @@ namespace LearnSolidPrinciple.Rating
     {
         public PolicyRaterAbstract Create(Policy policy, RatingEngine engine)
         {
-            switch (policy.Type)
+            try
             {
-                case PolicyType.Auto:
-                    return new AutoPolicyRater(engine, engine.Logger);
-
-                case PolicyType.Flood:
-                    return new FloodPolicyRater(engine, engine.Logger);
-
-                case PolicyType.Land:
-                    return new LandPolicyRater(engine, engine.Logger);
-
-                case PolicyType.Life:
-                    return new LifePolicyRater(engine, engine.Logger);
-
-                default:
-                    // currently this can't be reached 
-                    return new UnknownPolicyRater(engine, engine.Logger);
+                return (PolicyRaterAbstract)Activator.CreateInstance(
+                    Type.GetType($"LearnSolidPrinciple.Rating.{policy.Type}PolicyRater"),
+                        new object[] { engine, engine.Logger });
+            }
+            catch
+            {
+                return null;
             }
         }
     }

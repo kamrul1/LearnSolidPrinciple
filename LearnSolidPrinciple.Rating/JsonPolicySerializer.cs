@@ -1,4 +1,7 @@
-﻿using System.Text.Json;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace LearnSolidPrinciple.Rating
 {
@@ -6,9 +9,8 @@ namespace LearnSolidPrinciple.Rating
     {
         public Policy GetPolicyFromJsonString(string policyJson)
         {
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            var policy = JsonSerializer.Deserialize<Policy>(policyJson, options);
-            return policy;
+            return JsonConvert.DeserializeObject<Policy>(policyJson,
+                new StringEnumConverter());
         }
     }
 }
