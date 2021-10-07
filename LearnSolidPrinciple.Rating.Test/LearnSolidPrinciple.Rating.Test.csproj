@@ -19,4 +19,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LearnSolidPrinciple.Rating\LearnSolidPrinciple.Rating.csproj" />
+  </ItemGroup>
+
 </Project>
