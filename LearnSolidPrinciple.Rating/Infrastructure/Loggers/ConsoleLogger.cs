@@ -1,8 +1,10 @@
-﻿using System;
+﻿using LearnSolidPrinciple.Rating.Core.Interfaces;
+using System;
 
 namespace LearnSolidPrinciple.Rating
 {
-    public class ConsoleLogger
+
+    public class ConsoleLogger : ILogger
     {
         public void Log(string message)
         {

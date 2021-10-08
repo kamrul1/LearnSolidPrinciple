@@ -1,26 +1,41 @@
 ﻿using LearnSolidPrinciple.Rating.Core.Interfaces;
 using LearnSolidPrinciple.Rating.Core.Model;
-using Moq;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace LearnSolidPrinciple.Rating.Test
 {
-    public class RateingEngineIntegrationTest
+    //Mock object would be quicker as Fake classes would not be needed.
+    public class FakeLogger : ILogger
     {
+        public List<string> LoggedMessages { get; } = new List<string>();
+        public void Log(string message)
+        {
+            LoggedMessages.Add(message);
+        }
+    }
 
+    public class FakeRatingUpdater 
+    {
+        public decimal? NewRating { get; private set; }
+        public void UpdateRating(decimal rating)
+        {
+            NewRating = rating;
+        }
+    }
+
+    public class AutoPolicyRaterRateTest
+    {
         [Fact]
         public void LogsMakeRequiredMessageGivenPolicyWithoutMake()
         {
             var policy = new Policy() { Type = "Auto" };
             var logger = new FakeLogger();
-            var rater = new AutoPolicyRater(logger);
+            var rater = new AutoPolicyRater(null);
             rater.Logger = logger;
 
             rater.Rate(policy);
@@ -37,12 +52,12 @@ namespace LearnSolidPrinciple.Rating.Test
                 Make = "BMW",
                 Deductible = 250m
             };
-            var logger = new FakeLogger();
-            var rater = new AutoPolicyRater(logger);
+            var ratingUpdater = new FakeRatingUpdater();
+            var rater = new AutoPolicyRater(new FakeLogger());
 
-            var result = rater.Rate(policy);
+            rater.Rate(policy);
 
-            Assert.Equal(1000m, result);
+            Assert.Equal(1000m, ratingUpdater.NewRating.Value);
         }
 
         [Fact]
@@ -54,12 +69,13 @@ namespace LearnSolidPrinciple.Rating.Test
                 Make = "BMW",
                 Deductible = 500m
             };
-            var logger = new FakeLogger();
-            var rater = new AutoPolicyRater(logger);
+            var ratingUpdater = new FakeRatingUpdater();
+            var rater = new AutoPolicyRater(new FakeLogger());
 
-            var result = rater.Rate(policy);
+            rater.Rate(policy);
 
-            Assert.Equal(900m, result);
+            Assert.Equal(900m, ratingUpdater.NewRating.Value);
         }
+
     }
 }

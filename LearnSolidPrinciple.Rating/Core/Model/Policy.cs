@@ -1,10 +1,11 @@
 ﻿using System;
 
-namespace LearnSolidPrinciple.Rating
+namespace LearnSolidPrinciple.Rating.Core.Model
 {
     public class Policy
     {
-        public PolicyType Type { get; set; }
+        public string Type { get; set; }
+
         #region Life Insurance
         public string FullName { get; set; }
         public DateTime DateOfBirth { get; set; }
