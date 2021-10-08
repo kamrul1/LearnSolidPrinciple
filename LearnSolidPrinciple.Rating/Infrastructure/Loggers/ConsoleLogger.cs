@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LearnSolidPrinciple.Rating.Core.Interfaces;
+using System;
 
 namespace LearnSolidPrinciple.Rating
 {

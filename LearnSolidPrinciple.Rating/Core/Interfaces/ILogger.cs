@@ -1,4 +1,4 @@
-﻿namespace LearnSolidPrinciple.Rating
+﻿namespace LearnSolidPrinciple.Rating.Core.Interfaces
 {
     public interface ILogger
     {

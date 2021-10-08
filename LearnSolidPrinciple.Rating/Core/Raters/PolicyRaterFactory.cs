@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LearnSolidPrinciple.Rating.Core.Interfaces;
+using LearnSolidPrinciple.Rating.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +10,25 @@ namespace LearnSolidPrinciple.Rating
 {
     public class PolicyRaterFactory
     {
-        public PolicyRaterAbstract Create(Policy policy, IRatingContext context)
+        private readonly ILogger logger;
+
+        public PolicyRaterFactory(ILogger logger)
         {
+            this.logger = logger;
+        }
+        public PolicyRaterAbstract Create(Policy policy)
+        {
+
+
             try
             {
                 return (PolicyRaterAbstract)Activator.CreateInstance(
                     Type.GetType($"LearnSolidPrinciple.Rating.{policy.Type}PolicyRater"),
-                        new object[] { new RatingUpdater(context.Engine) });
+                        new object[] { logger });
             }
             catch
             {
-                return new UnknownPolicyRater(new RatingUpdater(context.Engine));
+                return new UnknownPolicyRater(logger);
             }
         }
     }

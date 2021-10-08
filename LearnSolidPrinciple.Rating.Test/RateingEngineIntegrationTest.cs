@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LearnSolidPrinciple.Rating.Core.Interfaces;
+using LearnSolidPrinciple.Rating.Core.Model;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,23 +14,52 @@ namespace LearnSolidPrinciple.Rating.Test
 {
     public class RateingEngineIntegrationTest
     {
+
         [Fact]
-        public void ReturnsRatingOf10000For200000LandPolicy()
+        public void LogsMakeRequiredMessageGivenPolicyWithoutMake()
         {
-            var policy = new Policy
+            var policy = new Policy() { Type = "Auto" };
+            var logger = new FakeLogger();
+            var rater = new AutoPolicyRater(logger);
+            rater.Logger = logger;
+
+            rater.Rate(policy);
+
+            Assert.Equal("Auto policy must specify Make", logger.LoggedMessages.Last());
+        }
+
+        [Fact]
+        public void SetsRatingTo1000ForBMWWith250Deductible()
+        {
+            var policy = new Policy()
             {
-                Type = "Land",
-                BondAmount = 200000,
-                Valuation = 200000
+                Type = "Auto",
+                Make = "BMW",
+                Deductible = 250m
             };
-            string json = JsonSerializer.Serialize(policy);
-            File.WriteAllText("policy.json", json);
+            var logger = new FakeLogger();
+            var rater = new AutoPolicyRater(logger);
 
-            var engine = new RatingEngine();
-            engine.Rate();
-            var result = engine.Rating;
+            var result = rater.Rate(policy);
 
-            Assert.Equal(10000, result);
+            Assert.Equal(1000m, result);
+        }
+
+        [Fact]
+        public void SetsRatingTo900ForBMWWith500Deductible()
+        {
+            var policy = new Policy()
+            {
+                Type = "Auto",
+                Make = "BMW",
+                Deductible = 500m
+            };
+            var logger = new FakeLogger();
+            var rater = new AutoPolicyRater(logger);
+
+            var result = rater.Rate(policy);
+
+            Assert.Equal(900m, result);
         }
     }
 }

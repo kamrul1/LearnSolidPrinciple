@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LearnSolidPrinciple.Rating.Core.Interfaces;
+using LearnSolidPrinciple.Rating.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,29 +10,29 @@ namespace LearnSolidPrinciple.Rating
 {
     public class FloodPolicyRater : PolicyRaterAbstract
     {
-        public FloodPolicyRater(IRatingUpdater ratingUpdater)
-            : base(ratingUpdater)
+        public FloodPolicyRater(ILogger logger)
+            : base(logger)
         {
         }
 
-        public override void Rate(Policy policy)
+        public override decimal Rate(Policy policy)
         {
-            logger.Log("Rating FLOOD policy...");
-            logger.Log("Validating policy.");
+            Logger.Log("Rating FLOOD policy...");
+            Logger.Log("Validating policy.");
             if (policy.BondAmount == 0 || policy.Valuation == 0)
             {
-                logger.Log("Flood policy must specify Bond Amount and Valuation.");
-                return;
+                Logger.Log("Flood policy must specify Bond Amount and Valuation.");
+                return 0m;
             }
             if (policy.ElevationAboveSeaLevelFeet <= 0)
             {
-                logger.Log("Flood policy is not available for elevations at or below sea level.");
-                return;
+                Logger.Log("Flood policy is not available for elevations at or below sea level.");
+                return 0m;
             }
             if (policy.BondAmount < 0.8m * policy.Valuation)
             {
-                logger.Log("Insufficient bond amount.");
-                return;
+                Logger.Log("Insufficient bond amount.");
+                return 0m;
             }
             decimal multiple = 1.0m;
             if (policy.ElevationAboveSeaLevelFeet < 100)
@@ -45,7 +47,7 @@ namespace LearnSolidPrinciple.Rating
             {
                 multiple = 1.1m;
             }
-            ratingUpdater.UpdateRating(policy.BondAmount * 0.05m * multiple);
+            return policy.BondAmount * 0.05m * multiple;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LearnSolidPrinciple.Rating
+namespace LearnSolidPrinciple.Rating.Core.Model
 {
     public class Policy
     {

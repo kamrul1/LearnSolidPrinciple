@@ -10,12 +10,12 @@ course by Aralis.  The repo that was used in the course can be found at Github:
 
 [ardalis/SolidSample](https://github.com/ardalis/SolidSample)
 
-# Setup
+### Setup
 
 I copied the basic code at the begin of the course as my begining master branch.
 
 
-### Applying Single Responsibility Principle
+## Applying Single Responsibility Principle
 
 Element to look for:
 - logging - ConsoleLogger class
@@ -31,7 +31,7 @@ Naming these classes are easy when they do only one thing.
 
 Each of these classes are also easily tested.
 
-### Applying Open/Closed Principle
+## Applying Open/Closed Principle
 
 This example make it possible to extend the functionality without changing it.
 In this case ***PolicyType.Flood*** is introduced.  This is to show that if
@@ -166,7 +166,7 @@ catch
 The UnknownPolicyRater details means that we do not need to deal with null checking.
 
 
-### Interface Segregation Principle
+## Interface Segregation Principle
 
 How to identify:
 - Large intefaces, code uses a small subset of it
@@ -195,6 +195,79 @@ public void Log(string message)
     new ConsoleLogger().Log(message);
 }
 ```
+
+
+## Dependency Inversion Principle
+
+Mostly to do with compile time dependencies.  This is seperating high level 
+concern from low level concerns
+
+High Level Dependencies:
+- More abstract and interfaces - define a contract
+- Business rules
+- Process oriented
+- Further away from input/output e.g. form and buttons
+- Model
+
+
+Low levels code is details, it's  about how you interact with a specific system and hardware. 
+These are things you can instatiate. 
+
+Low Level Detail dependencies:
+- "Plumbing" code connects
+- Database
+- File System
+- Email
+- Web API (hosting)
+- Configuration details (reading from a file)
+- Time (reading from external system)
+- Hidden - using static or new() glue keywords 
+
+Start by decoupling DafaultRatingContext class from it's blouted methods
+and remove it from RatingEngine class.
+
+
+
+
+This example introduces another logger, this time FileLogger class.  
+
+We could use constructor chaining for both overloads to work with legacy code
+
+```
+public RatingEngine(): this(new ConsoleLogger())
+{
+}
+
+public RatingEngine(ILogger logger)
+{
+    Context.Engine = this;
+    this.logger = logger;
+}
+
+```
+However, this still keeps a dependency.  So we move the new() instantiation up
+to the Program class and pass it in.
+
+
+Organising the files after refactoring.  Feature folder organisation as in 
+clean architecture:
+
+- **Core**: business logic without dependencies on external logic
+  - Interfaces: this could also be called abstractions
+  - Model: policy types
+  - Raters: business logic, including rating engine
+- **Infrastructure**: where specific implementation details e.g. file system
+  - Logger
+  - PolicySources
+  - Serializer
+- **UI**: entry point into the system
+
+
+
+
+
+
+
 
 
 

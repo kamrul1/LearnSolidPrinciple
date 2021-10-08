@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LearnSolidPrinciple.Rating.Core.Interfaces;
+using LearnSolidPrinciple.Rating.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +19,7 @@ namespace LearnSolidPrinciple.Rating.Test
         }
     }
 
-    public class FakeRatingUpdater : IRatingUpdater
+    public class FakeRatingUpdater 
     {
         public decimal? NewRating { get; private set; }
         public void UpdateRating(decimal rating)
@@ -34,7 +36,7 @@ namespace LearnSolidPrinciple.Rating.Test
             var policy = new Policy() { Type = "Auto" };
             var logger = new FakeLogger();
             var rater = new AutoPolicyRater(null);
-            rater.logger = logger;
+            rater.Logger = logger;
 
             rater.Rate(policy);
 
@@ -51,7 +53,7 @@ namespace LearnSolidPrinciple.Rating.Test
                 Deductible = 250m
             };
             var ratingUpdater = new FakeRatingUpdater();
-            var rater = new AutoPolicyRater(ratingUpdater);
+            var rater = new AutoPolicyRater(new FakeLogger());
 
             rater.Rate(policy);
 
@@ -68,7 +70,7 @@ namespace LearnSolidPrinciple.Rating.Test
                 Deductible = 500m
             };
             var ratingUpdater = new FakeRatingUpdater();
-            var rater = new AutoPolicyRater(ratingUpdater);
+            var rater = new AutoPolicyRater(new FakeLogger());
 
             rater.Rate(policy);
 

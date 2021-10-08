@@ -1,3 +1,5 @@
+using LearnSolidPrinciple.Rating.Core.Model;
+using LearnSolidPrinciple.Rating.Infrastructure.Serializers;
 using System;
 using Xunit;
 
@@ -13,7 +15,7 @@ namespace LearnSolidPrinciple.Rating.Test
             var serializer = new JsonPolicySerializer();
 
             //Act
-            var result = serializer.GetPolicyFromJsonString(inputJson);
+            var result = serializer.GetPolicyFromString(inputJson);
 
             //Assert
             var policy = new Policy();
