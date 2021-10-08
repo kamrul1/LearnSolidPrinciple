@@ -8,7 +8,7 @@ namespace LearnSolidPrinciple.Rating
 {
     public class UnknownPolicyRater : PolicyRaterAbstract
     {
-        public UnknownPolicyRater(RatingEngine engine, ConsoleLogger logger) : base(engine, logger)
+        public UnknownPolicyRater(IRatingUpdater ratingUpdater) : base(ratingUpdater)
         {
         }
 

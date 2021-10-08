@@ -8,8 +8,8 @@ namespace LearnSolidPrinciple.Rating
 {
     public class FloodPolicyRater : PolicyRaterAbstract
     {
-        public FloodPolicyRater(RatingEngine engine, ConsoleLogger logger)
-            : base(engine, logger)
+        public FloodPolicyRater(IRatingUpdater ratingUpdater)
+            : base(ratingUpdater)
         {
         }
 
@@ -45,7 +45,7 @@ namespace LearnSolidPrinciple.Rating
             {
                 multiple = 1.1m;
             }
-            engine.Rating = policy.BondAmount * 0.05m * multiple;
+            ratingUpdater.UpdateRating(policy.BondAmount * 0.05m * multiple);
         }
     }
 }

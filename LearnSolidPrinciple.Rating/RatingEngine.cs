@@ -10,31 +10,30 @@ namespace LearnSolidPrinciple.Rating
     /// </summary>
     public class RatingEngine
     {
+        public IRatingContext Context { get; set; } = new DefaultRatingContext();
         public decimal Rating { get; set; }
 
-        //
-        public ConsoleLogger Logger { get; set; } = new ConsoleLogger();
-        public FilePolicySource PolicySource { get; set; } = new FilePolicySource();
+        public RatingEngine()
+        {
+            Context.Engine = this;
+        }
 
-        public JsonPolicySerializer PolicySerializer { get; set; } = new JsonPolicySerializer();
 
         public void Rate()
         {
 
-            Logger.Log("Starting rate.");
+            Context.Log("Starting rate.");
 
-            Logger.Log("Loading policy.");
+            Context.Log("Loading policy.");
 
             //load policy - open file policy.json
-            string policyJson = PolicySource.GetPolicyFromSource();
-            Policy policy = PolicySerializer.GetPolicyFromJsonString(policyJson);
+            string policyJson = Context.LoadPolicyFromFile();
+            Policy policy = Context.GetPolicyFromJsonString(policyJson);
 
-            var factory = new PolicyRaterFactory();
+            var policyRaterAbstract = Context.CreateRaterForPolicy(policy, Context);
+            policyRaterAbstract.Rate(policy);
 
-            var policyRaterAbstract = factory.Create(policy, this);
-            policyRaterAbstract?.Rate(policy);
-
-            Logger.Log("Rating completed.");
+            Context.Log("Rating completed.");
 
         }
     }

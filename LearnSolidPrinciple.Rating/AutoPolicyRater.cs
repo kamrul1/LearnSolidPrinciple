@@ -8,8 +8,8 @@ namespace LearnSolidPrinciple.Rating
 {
     public class AutoPolicyRater : PolicyRaterAbstract
     {
-        public AutoPolicyRater(RatingEngine engine, ConsoleLogger logger)
-            :base(engine, logger)
+        public AutoPolicyRater(IRatingUpdater ratingUpdater)
+            :base(ratingUpdater)
         {
         }
 
@@ -27,9 +27,9 @@ namespace LearnSolidPrinciple.Rating
             {
                 if (policy.Deductible < 500)
                 {
-                    engine.Rating = 100m;
+                    ratingUpdater.UpdateRating(100m);
                 }
-                engine.Rating = 900m;
+                ratingUpdater.UpdateRating(900m);
             }
         }
 

@@ -2,13 +2,14 @@
 {
     public abstract class PolicyRaterAbstract
     {
-        protected readonly RatingEngine engine;
-        protected readonly ConsoleLogger logger;
 
-        public PolicyRaterAbstract(RatingEngine engine, ConsoleLogger logger)
+        protected readonly IRatingUpdater ratingUpdater;
+        public ILogger logger { get; set; } = new ConsoleLogger();
+
+        public PolicyRaterAbstract(IRatingUpdater ratingUpdater)
         {
-            this.engine = engine;
-            this.logger = logger;
+
+            this.ratingUpdater = ratingUpdater;
         }
 
         public abstract void Rate(Policy policy);

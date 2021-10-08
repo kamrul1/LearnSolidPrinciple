@@ -8,7 +8,7 @@ namespace LearnSolidPrinciple.Rating
 {
     public class LandPolicyRater : PolicyRaterAbstract
     {
-        public LandPolicyRater(RatingEngine engine, ConsoleLogger logger) : base(engine, logger)
+        public LandPolicyRater(IRatingUpdater ratingUpdater) : base(ratingUpdater)
         {
         }
 
@@ -28,7 +28,7 @@ namespace LearnSolidPrinciple.Rating
                 return;
             }
 
-            engine.Rating = policy.BondAmount * 0.5m;
+            ratingUpdater.UpdateRating(policy.BondAmount * 0.5m);
         }
     }
 }

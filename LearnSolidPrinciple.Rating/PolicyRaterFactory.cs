@@ -8,17 +8,17 @@ namespace LearnSolidPrinciple.Rating
 {
     public class PolicyRaterFactory
     {
-        public PolicyRaterAbstract Create(Policy policy, RatingEngine engine)
+        public PolicyRaterAbstract Create(Policy policy, IRatingContext context)
         {
             try
             {
                 return (PolicyRaterAbstract)Activator.CreateInstance(
                     Type.GetType($"LearnSolidPrinciple.Rating.{policy.Type}PolicyRater"),
-                        new object[] { engine, engine.Logger });
+                        new object[] { new RatingUpdater(context.Engine) });
             }
             catch
             {
-                return null;
+                return new UnknownPolicyRater(new RatingUpdater(context.Engine));
             }
         }
     }
